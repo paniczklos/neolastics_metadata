@@ -1,9 +1,9 @@
-const express = require("express");
-const serverless = require("serverless-http");
+const express = require('express');
+const serverless = require('serverless-http');
 const router = express.Router();
 const app = express();
 
-const { ethers } = require("ethers");
+const { ethers } = require('ethers');
 
 // MUST match JS + Solidity
 function hexToBytes(hex) {
@@ -20,7 +20,7 @@ function generateStringSVGFromHash(hash) {
   palette.push(`#dd0100`); //red
   palette.push(`#ffffff`); //w
   palette.push(`#000000`); //black
-  palette.push("#00770F"); //green: rare 1/256 chance for a til
+  palette.push('#00770F'); //green: rare 1/256 chance for a til
 
   const bytes = hexToBytes(hash.slice(2));
   const svg =
@@ -42,7 +42,7 @@ function generateStringSVGFromHash(hash) {
     "<polygon fill='" +
     palette[parseInt(bytes[2] / 51)] +
     "' points='77.271,63.298 77.277,63.298 62.759,48.78 52.03,59.509 52.029,59.509 50.797,60.742 48.254,63.285 48.254,63.285 48.234,63.305 48.254,63.326 62.759,77.831 77.277,63.313 77.284,63.305 '/>" +
-    "</svg>";
+    '</svg>';
 
   return svg;
 }
@@ -52,22 +52,22 @@ function generateMetadata(req, res) {
   const truncated = hash.slice(0, 20); // 0x + 9 bytes
   const svg = generateStringSVGFromHash(hash);
 
-  if (res.params.id.includes("svg")) {
+  if (res.params.id.includes('svg')) {
     return res.status(200).send(svg);
   }
 
   return res.status(200).json({
-    name: "Neolastic " + truncated,
-    description: "Liquid On-Chain Generative Neo-Plastic Art",
+    name: 'Neolastic ' + truncated,
+    description: 'Liquid On-Chain Generative Neo-Plastic Art',
     image_data: svg,
   });
 }
 
-router.get("/:id", generateMetadata);
+router.get('/:id', generateMetadata);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("/.netlify/functions/server", router);
+app.use('/.netlify/functions/server', router);
 
 module.exports = app;
 module.exports.handler = serverless(app);
