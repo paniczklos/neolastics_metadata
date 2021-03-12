@@ -48,18 +48,19 @@ function generateStringSVGFromHash(hash) {
 }
 
 function generateMetadata(req, res) {
-  const hash = ethers.BigNumber.from(req.params.id).toHexString();
+  const _id = req.params.id.slice(0,88);
+  const hash = ethers.BigNumber.from(_id).toHexString();
   const truncated = hash.slice(0, 20); // 0x + 9 bytes
   const svg = generateStringSVGFromHash(hash);
   
-  if (req.params.id.includes("svg")) {
+  if (req.params.id.includes(".svg")) {
     return res.status(200).send(svg);
   }
       return res.status(200).json({ 
         name: "BSCpop "+truncated,
         description: "Your BSCpopART",
         image_data: svg,
-        image: "/" + req.params.id + ".svg" })
+        image: "https://stoic-raman-99920c.netlify.app/.netlify/functions/server/" + _id + ".svg" })
 }
 
 router.get("/:id", generateMetadata);
