@@ -3,6 +3,12 @@ const serverless = require("serverless-http");
 const router = express.Router();
 const app = express();
 
+const port = 8080;
+
+app.listen(port, function () {
+  console.log("app started");
+});
+
 const { ethers } = require("ethers");
 
 // MUST match JS + Solidity
@@ -47,20 +53,29 @@ function generateStringSVGFromHash(hash) {
   return svg;
 }
 
+const hashGenerator = (_id) => {
+  if (!_id.includes("svg")) {
+    return ethers.BigNumber.from(_id).toHexString();
+  }
+  return ethers.BigNumber.from(_id.split(".")[0]).toHexString();
+};
+
 function generateMetadata(req, res) {
-  const _id = req.params.id.slice(0,88);
-  const hash = ethers.BigNumber.from(_id).toHexString();
+  const id = req.params.id;
+  const hash = hashGenerator(id);
+
   const truncated = hash.slice(0, 20); // 0x + 9 bytes
   const svg = generateStringSVGFromHash(hash);
-  
-  if (req.params.id.includes("svg")) {
-    return res.status(200).send(svg);
+
+  if (!id.includes("svg")) {
+    return res.status(200).json({
+      name: "BSCpop " + truncated,
+      description: "Your BSCpopART",
+      image_data: svg,
+    });
   }
-      return res.status(200).json({ 
-        name: "BSCpop "+truncated,
-        description: "Your BSCpopART",
-        image_data: svg,
-        image: "https://stoic-raman-99920c.netlify.app/.netlify/functions/server/" + _id + ".svg" })
+
+  return res.status(200).send(svg);
 }
 
 router.get("/:id", generateMetadata);
