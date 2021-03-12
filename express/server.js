@@ -63,7 +63,7 @@ const hashGenerator = (_id) => {
 function generateMetadata(req, res) {
   const id = req.params.id;
   const hash = hashGenerator(id);
-  const imageUrl = req.headers.host + req.originalUrl;
+  const imageUrl = "https://" + req.headers.host + req.originalUrl + ".svg";
 
   const truncated = hash.slice(0, 20); // 0x + 9 bytes
   const svg = generateStringSVGFromHash(hash);
