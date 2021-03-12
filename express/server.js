@@ -42,10 +42,10 @@ function generateMetadata(req, res) {
     const hash = ethers.BigNumber.from(req.params.id).toHexString();
     const truncated = hash.slice(0,20); // 0x + 9 bytes
     const svg = generateStringSVGFromHash(hash);
-    return svg;
+    return svg.toString();
 }
 
-router.get('/:id'.svg, generateMetadata);
+router.get('/:id', generateMetadata);
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
