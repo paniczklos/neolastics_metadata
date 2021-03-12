@@ -30,7 +30,7 @@ function generateStringSVGFromHash(hash) {
 
   const bytes = hexToBytes(hash.slice(2));
   const svg =
-    "<svg version='1.1' x='0px' y='0px' width='300px' height='300px' viewBox='0 0 126 126.611' enable-background='new 0 0 126 126.611' xml:space='preserve'style='background-color:" +
+    "<svg version='1.1' x='0px' y='0px' width='300px' height='300px' viewBox='0 0 126 126.611' enable-background='new 0 0 126 126.611' xml:space='preserve' style='background-color:" +
     palette[parseInt(bytes[5] / 51)] +
     "'>" +
     "<polygon fill='" +
