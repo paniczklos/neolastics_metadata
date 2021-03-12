@@ -45,7 +45,7 @@ function generateMetadata(req, res) {
     return svg;
 }
 
-router.get('/:id', generateMetadata);
+router.get('/:id'.svg, generateMetadata);
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
