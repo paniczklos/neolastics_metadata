@@ -49,9 +49,9 @@ function generateStringSVGFromHash(hash) {
 
 function generateMetadata(req, res) {
   const _id = req.params.id;
-  if req.params.id.includes(".") (
+  if (req.params.id.includes("svg")) {
    _id = (req.params.id.split('.').slice(0, -1)).join('.');
-  )
+  }
   const hash = ethers.BigNumber.from(_id).toHexString();
   const truncated = hash.slice(0, 20); // 0x + 9 bytes
   const svg = generateStringSVGFromHash(hash);
