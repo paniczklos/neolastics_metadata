@@ -51,6 +51,10 @@ function generateMetadata(req, res) {
   const hash = ethers.BigNumber.from(req.params.id).toHexString();
   const truncated = hash.slice(0, 20); // 0x + 9 bytes
   const svg = generateStringSVGFromHash(hash);
+  
+  if (res.params.id.includes("svg")) {
+    return res.status(200).send(svg);
+  }
   return res.status(200).send(svg);
 }
 
