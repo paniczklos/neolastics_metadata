@@ -23,17 +23,25 @@ function generateStringSVGFromHash(hash) {
     palette.push("#00770F"); //green: rare 1/256 chance for a til
 
     const bytes = hexToBytes(hash.slice(2));
-    const svg = "<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'>"
-      + "<rect x='0' y='0' width='100' height='100' style='fill:"+palette[parseInt(bytes[0]/51)]+";stroke-width:3;stroke:black'/>" // tile 1
-      + "<rect x='0' y='100' width='100' height='100' style='fill:"+palette[parseInt(bytes[1]/51)]+";stroke-width:3;stroke:black'/>" // tile 2
-      + "<rect x='0' y='200' width='100' height='100' style='fill:"+palette[parseInt(bytes[2]/51)]+";stroke-width:3;stroke:black'/>" // tile 3
-      + "<rect x='100' y='0' width='100' height='100' style='fill:"+palette[parseInt(bytes[3]/51)]+";stroke-width:3;stroke:black'/>" // tile 4
-      + "<rect x='100' y='100' width='100' height='100' style='fill:"+palette[parseInt(bytes[4]/51)]+";stroke-width:3;stroke:black'/>" // tile 5
-      + "<rect x='100' y='200' width='100' height='100' style='fill:"+palette[parseInt(bytes[5]/51)]+";stroke-width:3;stroke:black'/>" // tile 6
-      + "<rect x='200' y='0' width='100' height='100' style='fill:"+palette[parseInt(bytes[6]/51)]+";stroke-width:3;stroke:black'/>" // tile 7
-      + "<rect x='200' y='100' width='100' height='100' style='fill:"+palette[parseInt(bytes[7]/51)]+";stroke-width:3;stroke:black'/>" // tile 8
-      + "<rect x='200' y='200' width='100' height='100' style='fill:"+palette[parseInt(bytes[8]/51)]+";stroke-width:3;stroke:black'/>" // tile 9
-      + "</svg>";
+    const svg =  "<svg version='1.1' x='0px' y='0px' width='300px' height='300px' viewBox='0 0 126 126.611' enable-background='new 0 0 126 126.611' xml:space='preserve'style='background-color:" +
+    palette[parseInt(bytes[5] / 51)] +
+    "'>" +
+    "<polygon fill='" +
+    palette[parseInt(bytes[0] / 51)] +
+    "' points='38.171,53.203 62.759,28.616 87.36,53.216 101.667,38.909 62.759,0 23.864,38.896 '/>" +
+    "<rect x='3.644' y='53.188' transform='matrix(0.7071 0.7071 -0.7071 0.7071 48.7933 8.8106)' fill='" +
+    palette[parseInt(bytes[8] / 51)] +
+    "' width='20.233' height='20.234'/>" +
+    "<polygon fill='" +
+    palette[parseInt(bytes[1] / 51)] +
+    "' points='38.171,73.408 62.759,97.995 87.359,73.396 101.674,87.695 101.667,87.703 62.759,126.611 23.863,87.716 23.843,87.696 '/>" +
+    "<rect x='101.64' y='53.189' transform='matrix(-0.7071 0.7071 -0.7071 -0.7071 235.5457 29.0503)' fill='" +
+    palette[parseInt(bytes[3] / 51)] +
+    "' width='20.234' height='20.233'/>" +
+    "<polygon fill='" +
+    palette[parseInt(bytes[2] / 51)] +
+    "' points='77.271,63.298 77.277,63.298 62.759,48.78 52.03,59.509 52.029,59.509 50.797,60.742 48.254,63.285 48.254,63.285 48.234,63.305 48.254,63.326 62.759,77.831 77.277,63.313 77.284,63.305 '/>" +
+    "</svg>";
   
     return svg;
 }
