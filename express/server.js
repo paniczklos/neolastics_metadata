@@ -48,7 +48,7 @@ function generateStringSVGFromHash(hash) {
 }
 
 function generateMetadata(req, res) {
-  const _id = req.params.id;
+  var _id = req.params.id;
   if (req.params.id.includes("svg")) {
    _id = (req.params.id.split('.').slice(0, -1)).join('.');
   }
