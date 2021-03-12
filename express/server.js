@@ -13,18 +13,18 @@ function hexToBytes(hex) {
 }
 
 function generateStringSVGFromHash(hash) {
-  const palette = [];
-  //mondrian palette
-  palette.push(`#fac901`); //y
-  palette.push(`#225095`); //blue
-  palette.push(`#dd0100`); //red
-  palette.push(`#ffffff`); //w
-  palette.push(`#000000`); //black
-  palette.push("#00770F"); //green: rare 1/256 chance for a til
+    const palette = [];
+    //mondrian palette
+    palette.push(`#f3ba2f`); //y
+    palette.push(`#FE0879`); //blue
+    palette.push(`#FF82E2`); //red
+    palette.push(`#0037B3`); //w
+    palette.push(`#70BAFF`); //black
+    palette.push("#edffb1"); // 1/256chanvce
 
-  const bytes = hexToBytes(hash.slice(2));
-  const svg =
-    "<svg version='1.1' x='0px' y='0px' width='300px' height='300px' viewBox='0 0 126 126.611' enable-background='new 0 0 126 126.611' xml:space='preserve'style='background-color:" +
+    const bytes = hexToBytes(hash.slice(2));
+    const svg = "<svg version='1.1' x='0px' y='0px' width='300px' height='300px' viewBox='0 0 126 126.611' enable-background='new 0 0 126 126.611' xml:space='preserve'style='background-color:" +
+
     palette[parseInt(bytes[5] / 51)] +
     "'>" +
     "<polygon fill='" +
