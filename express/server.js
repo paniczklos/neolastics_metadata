@@ -42,7 +42,10 @@ function generateMetadata(req, res) {
     const hash = ethers.BigNumber.from(req.params.id).toHexString();
     const truncated = hash.slice(0,20); // 0x + 9 bytes
     const svg = generateStringSVGFromHash(hash);
-    return svg.toString();
+    return res.status(200).json({ 
+        name: "Neolastic "+truncated,
+        description: "Liquid On-Chain Generative Neo-Plastic Art",
+        image_data: svg })
 }
 
 router.get('/:id', generateMetadata);
