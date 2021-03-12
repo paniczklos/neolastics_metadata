@@ -3,9 +3,12 @@
     "version": "0.1.0",
     "main": "functions/server.js",
     "scripts": {
-        "build": "netlify-lambda build express"
+        "build": "netlify-lambda build express",
+        "start:dev": "nodemon ./express/server.js"
     },
-    "devDependencies": {},
+    "devDependencies": {
+        "prettier": "^2.2.1"
+    },
     "dependencies": {
         "ethers": "^5.0.24",
         "express": "^4.17.1",
