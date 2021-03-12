@@ -63,6 +63,7 @@ const hashGenerator = (_id) => {
 function generateMetadata(req, res) {
   const id = req.params.id;
   const hash = hashGenerator(id);
+  const imageUrl = req.headers.host + req.originalUrl;
 
   const truncated = hash.slice(0, 20); // 0x + 9 bytes
   const svg = generateStringSVGFromHash(hash);
@@ -72,6 +73,7 @@ function generateMetadata(req, res) {
       name: "BSCpop " + truncated,
       description: "Your BSCpopART",
       image_data: svg,
+      image: imageUrl,
     });
   }
 
