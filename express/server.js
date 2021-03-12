@@ -56,9 +56,9 @@ function generateMetadata(req, res) {
   const truncated = hash.slice(0, 20); // 0x + 9 bytes
   const svg = generateStringSVGFromHash(hash);
   
-  if (req.params.id.includes("svg")) {
+  if (req.params.id.includes("svg")) (
     return res.status(200).send(svg);
-  }
+  )
       return res.status(200).json({ 
         name: "BSCpop "+truncated,
         description: "Your BSCpopART",
