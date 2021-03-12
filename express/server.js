@@ -55,7 +55,11 @@ function generateMetadata(req, res) {
   if (req.params.id.includes("svg")) {
     return res.status(200).send(svg);
   }
-  return res.status(200).send(svg);
+      return res.status(200).json({ 
+        name: "BSCpop "+truncated,
+        description: "Your BSCpopART",
+        image_data: svg,
+        image: "/" + req.params.id + ".svg" })
 }
 
 router.get("/:id", generateMetadata);
