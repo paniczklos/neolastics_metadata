@@ -1,7 +1,7 @@
 const express = require('express');
 const serverless = require('serverless-http');
 const { ethers } = require('ethers');
-const { convert } = require('convert-svg-to-png');
+const svg2png = require("svg2png");
 
 const router = express.Router();
 
@@ -77,7 +77,7 @@ const generateMetadata = async(req, res) => {
          image: imageUrl,
       });
    }
-   const png = await convert(svg);
+   var png = await svg2png.sync(svg);
    res.type("image/png");
    return res.status(200).send(png);
 };
