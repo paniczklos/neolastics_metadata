@@ -26,7 +26,7 @@ const generateStringSVGFromHash = (hash) => {
    ];
 
    const bytes = hexToBytes(hash.slice(2));
-   const svg =
+   const svg ="<?xml version='1.0' encoding='utf-8'?><!DOCTYPE svg>" +
       "<svg version='1.1' x='0px' y='0px' width='300px' height='300px' viewBox='0 0 126 126.611' enable-background='new 0 0 126 126.611' xml:space='preserve' " +
       '>' +
       "<rect id='rect4' height='126' width='126' fill='" +
