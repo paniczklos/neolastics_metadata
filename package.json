@@ -16,6 +16,7 @@
         "nodemon": "^2.0.6",
         "serverless-http": "^2.6.0",
         "convert-svg-to-png": "^0.5.0",
-        "puppeteer": "^1.20.0"
+        "puppeteer": "^1.20.0",
+        "convert-svg-core": "^0.5.0"
     }
 }
