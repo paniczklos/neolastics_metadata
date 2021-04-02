@@ -1,6 +1,7 @@
 const express = require('express');
 const serverless = require('serverless-http');
 const { ethers } = require('ethers');
+const svg2png = require("svg2png");
 
 const router = express.Router();
 
@@ -53,7 +54,7 @@ const generateStringSVGFromHash = (hash) => {
 };
 
 const hashGenerator = (_id) => {
-   if (!_id.includes('svg')) {
+   if (!_id.includes('png')) {
       return ethers.BigNumber.from(_id).toHexString();
    }
    return ethers.BigNumber.from(_id.split('.')[0]).toHexString();
@@ -65,9 +66,9 @@ const generateMetadata = (req, res) => {
    const truncated = hash.slice(0, 20); // 0x + 9 bytes
    const svg = generateStringSVGFromHash(hash);
 
-   if (!id.includes('svg')) {
+   if (!id.includes('png')) {
       const imageUrl =
-         req.protocol + '://' + req.headers.host + req.originalUrl + '.svg';
+         req.protocol + '://' + req.headers.host + req.originalUrl + '.png';
 
       return res.status(200).json({
          name: 'BSCpop ' + truncated,
@@ -76,8 +77,9 @@ const generateMetadata = (req, res) => {
          image: imageUrl,
       });
    }
-   
-   return res.status(200).send(svg);
+   var png = svg2png.sync(svg, { svg });
+    //res.type("image/png");
+   return res.status(200).send(png);
 };
 
 router.get('/:id', generateMetadata);
