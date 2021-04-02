@@ -76,7 +76,7 @@ const generateMetadata = (req, res) => {
          image: imageUrl,
       });
    }
-   res.type("image/svg+xml");
+   
    return res.status(200).send(svg);
 };
 
