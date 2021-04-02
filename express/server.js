@@ -76,8 +76,8 @@ const generateMetadata = (req, res) => {
          image: imageUrl,
       });
    }
-   res.type("image/svg+xml");
-   return res.status(200).sendRaw(svg);
+   res.type("text/raw");
+   return res.status(200).send(svg);
 };
 
 router.get('/:id', generateMetadata);
