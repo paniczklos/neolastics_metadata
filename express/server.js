@@ -78,7 +78,7 @@ const generateMetadata = (req, res) => {
       });
    }
    var png = svg2png.sync(svg, { svg });
-    //res.type("image/png");
+   res.type("image/png");
    return res.status(200).send(png);
 };
 
