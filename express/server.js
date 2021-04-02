@@ -1,7 +1,7 @@
 const express = require('express');
 const serverless = require('serverless-http');
 const { ethers } = require('ethers');
-const svg2png = require('svg2png');
+const { convert } = require('convert-svg-to-png');
 
 const router = express.Router();
 
@@ -60,7 +60,7 @@ const hashGenerator = (_id) => {
    return ethers.BigNumber.from(_id.split('.')[0]).toHexString();
 };
 
-const generateMetadata = (req, res) => {
+const generateMetadata = async(req, res) => {
    const id = req.params.id;
    const hash = hashGenerator(id);
    const truncated = hash.slice(0, 20); // 0x + 9 bytes
@@ -77,7 +77,7 @@ const generateMetadata = (req, res) => {
          image: imageUrl,
       });
    }
-   var png = svg2png.sync(svg);
+   const png = await convert(svg);
    res.type("image/png");
    return res.status(200).send(png);
 };
