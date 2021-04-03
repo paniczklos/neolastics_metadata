@@ -1,9 +1,6 @@
 const express = require('express');
 const serverless = require('serverless-http');
 const { ethers } = require('ethers');
-const svg2png = require("svg2png");
-const svgToImg = require("svg-to-img");
-const { convert } = require('convert-svg-to-jpeg');
 
 const router = express.Router();
 
@@ -29,7 +26,8 @@ const generateStringSVGFromHash = (hash) => {
    ];
 
    const bytes = hexToBytes(hash.slice(2));
-   const svg ="<svg version='1.1' x='0px' y='0px' width='300px' height='300px' viewBox='0 0 126 126.611' enable-background='new 0 0 126 126.611' xml:space='preserve' " +
+   const svg ="<?xml version='1.0' encoding='utf-8'?><!DOCTYPE svg>" +
+      "<svg version='1.1' x='0px' y='0px' width='300px' height='300px' viewBox='0 0 126 126.611' enable-background='new 0 0 126 126.611' xml:space='preserve' " +
       '>' +
       "<rect id='rect4' height='126' width='126' fill='" +
       palette[parseInt(bytes[5] / 51)] +
@@ -55,21 +53,21 @@ const generateStringSVGFromHash = (hash) => {
 };
 
 const hashGenerator = (_id) => {
-   if (!_id.includes('png')) {
+   if (!_id.includes('svg')) {
       return ethers.BigNumber.from(_id).toHexString();
    }
    return ethers.BigNumber.from(_id.split('.')[0]).toHexString();
 };
 
-const generateMetadata = async(req, res) => {
+const generateMetadata = (req, res) => {
    const id = req.params.id;
    const hash = hashGenerator(id);
    const truncated = hash.slice(0, 20); // 0x + 9 bytes
    const svg = generateStringSVGFromHash(hash);
 
-   if (!id.includes('png')) {
+   if (!id.includes('svg')) {
       const imageUrl =
-         req.protocol + '://' + req.headers.host + req.originalUrl + '.png';
+         req.protocol + '://' + req.headers.host + req.originalUrl + '.svg';
 
       return res.status(200).json({
          name: 'BSCpop ' + truncated,
@@ -78,14 +76,8 @@ const generateMetadata = async(req, res) => {
          image: imageUrl,
       });
    }
-   try {
-   var png = await await convert(svg);
-   res.type("image/jpeg");}
-    catch (error) {
-      console.error(error);
-
-    }
-   return res.status(200).send(png);
+   
+   return res.status(200).send(svg);
 };
 
 router.get('/:id', generateMetadata);
