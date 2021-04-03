@@ -1,8 +1,6 @@
 const express = require('express');
 const serverless = require('serverless-http');
 const { ethers } = require('ethers');
-const svg2png = require("svg2png");
-const svgToImg = require("svg-to-img");
 const { convert } = require('convert-svg-to-jpeg');
 
 const router = express.Router();
