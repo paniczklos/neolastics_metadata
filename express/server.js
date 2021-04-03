@@ -79,7 +79,7 @@ const generateMetadata = async(req, res) => {
       });
    }
    try {
-   var png = svg2png(svg);
+   var png = await svg2png(svg);
    res.type("image/png");}
     catch (error) {
       console.error(error);
