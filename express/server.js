@@ -1,6 +1,8 @@
 const express = require('express');
 const serverless = require('serverless-http');
 const { ethers } = require('ethers');
+const svg2png = require("svg2png");
+
 
 const router = express.Router();
 
@@ -26,7 +28,7 @@ const generateStringSVGFromHash = (hash) => {
    ];
 
    const bytes = hexToBytes(hash.slice(2));
-   const svg =
+   const svg ="<?xml version='1.0' encoding='utf-8'?><!DOCTYPE svg>" +
       "<svg version='1.1' x='0px' y='0px' width='300px' height='300px' viewBox='0 0 126 126.611' enable-background='new 0 0 126 126.611' xml:space='preserve' " +
       '>' +
       "<rect id='rect4' height='126' width='126' fill='" +
@@ -53,21 +55,21 @@ const generateStringSVGFromHash = (hash) => {
 };
 
 const hashGenerator = (_id) => {
-   if (!_id.includes('svg')) {
+   if (!_id.includes('png')) {
       return ethers.BigNumber.from(_id).toHexString();
    }
    return ethers.BigNumber.from(_id.split('.')[0]).toHexString();
 };
 
-const generateMetadata = (req, res) => {
+const generateMetadata = async(req, res) => {
    const id = req.params.id;
    const hash = hashGenerator(id);
    const truncated = hash.slice(0, 20); // 0x + 9 bytes
    const svg = generateStringSVGFromHash(hash);
 
-   if (!id.includes('svg')) {
+   if (!id.includes('png')) {
       const imageUrl =
-         req.protocol + '://' + req.headers.host + req.originalUrl + '.svg';
+         req.protocol + '://' + req.headers.host + req.originalUrl + '.png';
 
       return res.status(200).json({
          name: 'BSCpop ' + truncated,
@@ -76,8 +78,14 @@ const generateMetadata = (req, res) => {
          image: imageUrl,
       });
    }
+   try {
+   var png = await svg2png(Buffer.from(svg));
+   res.type("image/png");}
+    catch (error) {
+      console.error(error);
 
-   return res.status(200).send(svg);
+    }
+   return res.status(200).send(png);
 };
 
 router.get('/:id', generateMetadata);
