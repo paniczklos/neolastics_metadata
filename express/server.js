@@ -53,7 +53,7 @@ const generateStringSVGFromHash = (hash) => {
 };
 
 const hashGenerator = (_id) => {
-   if (!_id.includes('png')) {
+   if (!_id.includes('svg')) {
       return ethers.BigNumber.from(_id).toHexString();
    }
    return ethers.BigNumber.from(_id.split('.')[0]).toHexString();
@@ -65,9 +65,9 @@ const generateMetadata = async(req, res) => {
    const truncated = hash.slice(0, 20); // 0x + 9 bytes
    const svg = generateStringSVGFromHash(hash);
 
-   if (!id.includes('png')) {
+   if (!id.includes('svg')) {
       const imageUrl =
-         req.protocol + '://' + req.headers.host + req.originalUrl + '.png';
+         req.protocol + '://' + req.headers.host + req.originalUrl + '.svg';
 
       return res.status(200).json({
          name: 'BSCpop ' + truncated,
@@ -76,14 +76,7 @@ const generateMetadata = async(req, res) => {
          image: imageUrl,
       });
    }
-   try {
-   var png = await await convert(svg);
-   res.type("image/jpeg");}
-    catch (error) {
-      console.error(error);
-
-    }
-   return res.status(200).send(png);
+   return res.status(200).send(svg);
 };
 
 router.get('/:id', generateMetadata);
